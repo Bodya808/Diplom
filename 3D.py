@@ -19,22 +19,20 @@ fig = plt.figure(figsize=(12, 8))
 ax = fig.add_subplot(111, projection='3d')
 
 # Извлечение данных
-x = data_2['Потребление электроэнергии (кВт·ч)']  # X - потребление энергии
-y = data_2['Уровень загрязнения воздуха (мкг/м³)']  # Y - загрязнение воздуха
-z = np.arange(len(data_2))  # Z - порядковый номер города
+x = data_2['Потребление электроэнергии (кВт·ч)']
+y = data_2['Уровень загрязнения воздуха (мкг/м³)']
+z = np.arange(len(data_2))
 
 # Построение графика
 sc_energy = ax.scatter(x, y, z, c=energy_consumption, cmap='coolwarm', marker='o', s=150, edgecolor='k', label='Энергия')
+sc_pollution = ax.scatter(x, y, z, c=air_pollution, cmap='viridis', marker='^', s=100, edgecolor='k', alpha=0.7, label='Загрязнение')
 
-# Добавим еще одну шкалу для уровня загрязнения
-sc_pollution = ax.scatter(x, y, z, c=air_pollution, cmap='viridis', marker='^', s=100, edgecolor='k', label='Загрязнение')
+# Добавление легенды
+ax.legend(loc='upper right', fontsize=10, markerscale=1.5)
 
-# Добавляем легенду
-ax.legend()
-
-# Добавление аннотаций для каждого города
+# Добавление аннотаций
 for i, city in enumerate(cities):
-    ax.text(x.iloc[i], y.iloc[i], z[i], city, fontsize=10, ha='center', va='top')
+    ax.text(x.iloc[i], y.iloc[i], z[i], city, fontsize=10, ha='center', va='bottom', color='dimgray', backgroundcolor='w', alpha=0.7)
 
 # Настройка осей
 ax.set_xlabel('Потребление электроэнергии (кВт·ч)', fontsize=12, labelpad=15)
@@ -43,16 +41,20 @@ ax.set_zlabel('Города', fontsize=12, labelpad=15)
 ax.set_zticks(z)
 ax.set_zticklabels(data_2.index, fontsize=10)
 
-# Добавление цветовой шкалы для энергопотребления
-cbar_energy = plt.colorbar(sc_energy, ax=ax, shrink=0.6, aspect=5)
+# Добавление цветовой шкалы
+cbar_energy = plt.colorbar(sc_energy, ax=ax, shrink=0.5, aspect=5, pad=0.1, fraction=0.05)
 cbar_energy.set_label('Потребление электроэнергии (кВт·ч)', fontsize=10)
 
-# Добавление цветовой шкалы для загрязнения
-cbar_pollution = plt.colorbar(sc_pollution, ax=ax, location='right', shrink=0.6, aspect=5)
+cbar_pollution = plt.colorbar(sc_pollution, ax=ax, location='right', shrink=0.5, aspect=5, pad=0.1, fraction=0.05)
 cbar_pollution.set_label('Уровень загрязнения (мкг/м³)', fontsize=10)
 
-# Улучшаем обзор
-ax.view_init(elev=30, azim=45)
+# Настройка угла обзора
+ax.view_init(elev=30, azim=135)
 
-plt.title('Анализ Энергопотребления и Загрязнения Воздуха', fontsize=15, pad=20)
+# Заголовок
+plt.title('Анализ Энергопотребления и Загрязнения Воздуха', fontsize=16, pad=30)
+
+# Ручная настройка макета
+plt.subplots_adjust(left=0.1, right=0.9, top=0.9, bottom=0.1)
+
 plt.show()

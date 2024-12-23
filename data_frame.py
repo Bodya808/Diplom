@@ -5,7 +5,7 @@ import seaborn as sns
 import plotly.express as px
 
 # Шаг 1: Создание DataFrame с данными
-countries = ['США', 'Германия', 'Великобритания', 'Франция', 'Япония']
+countries = ['United States', 'Germany', 'United Kingdom', 'France', 'Japan']
 gdp = [21300, 3800, 2800, 2700, 5000]  # ВВП в миллиардах долларов
 unemployment_rate = [6.0, 4.0, 4.5, 7.1, 2.8]  # Уровень безработицы в %
 
